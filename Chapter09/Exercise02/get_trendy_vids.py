@@ -6,7 +6,7 @@ def get_topn_viewed(df, date, topn):
 
 
 if __name__ == "__main__":
-    print()
+    # config
     PATH_FILE_IN = Path(__file__).parent.absolute()/'../Data/USvideos.csv.zip'
     PATH_FILE_OUT = Path(__file__).parent.absolute()/'../Data/top_10_trendy_vids.csv'
     DATE = "17.14.11"
