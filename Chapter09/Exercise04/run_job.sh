@@ -29,6 +29,7 @@ echo "[[ RUNNING JOB ]] step 4: persist result data"
 python $SRC_DIR/store_data.py --path $OUTPUT_FILE
 
 if [ "$?" = "0" ]; then
+	rm -rf ./tmp/
 	echo "[[ JOB ]] END"
 else
 	echo "[[ JOB FAILS!! ]]" 1>&2
