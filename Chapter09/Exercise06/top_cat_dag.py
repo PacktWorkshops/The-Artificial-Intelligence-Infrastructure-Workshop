@@ -2,16 +2,21 @@ import json
 import os
 import shutil
 import sys
+from datetime import datetime
 
 import pandas as pd
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 
-from datatime import datetime
 
-
-def filter_data(path_vids, date):
+def filter_data(**kwargs):
     # read data
+    path_vids = kwargs['dag_run'].conf['path_vids']
+    date = str(kwargs['dag_run'].conf['date'])
+
+    print(os.getcwd())
+    print(path_vids)
+
     df_vids = pd.read_csv(path_vids, compression='zip') \
         .query('trending_date==@date')
     # cache
@@ -22,8 +27,9 @@ def filter_data(path_vids, date):
         df_vids.to_csv('./tmp/data_vids.csv', index=False)
 
 
-def preprocess_data(path_cats):
+def preprocess_data(**kwargs):
     # read data
+    path_cats = kwargs['dag_run'].conf['path_cats']
     data_cats = json.load(open(path_cats, 'r'))
     # convert json to dataframe
     df_cat = pd.DataFrame(data_cats)
@@ -38,7 +44,7 @@ def preprocess_data(path_cats):
         df_cat_drop.to_csv('./tmp/data_cats.csv')
 
 
-def join_data():
+def join_data(**kwargs):
     try:
         df_vids = pd.read_csv('./tmp/data_vids.csv')
         df_cats = pd.read_csv('./tmp/data_cats.csv')
@@ -51,7 +57,8 @@ def join_data():
     df_join.to_csv('./tmp/data_joined.csv')
 
 
-def sort_data(topn):
+def sort_data(**kwargs):
+    topn = kwargs['dag_run'].conf.get('topn', 10)
     try:
         df_join = pd.read_csv('./tmp/data_joined.csv')
     except Exception as e:
@@ -64,25 +71,26 @@ def sort_data(topn):
     df_topn.to_csv('./tmp/data_topn.csv')
 
 
-def store_data(filepath):
+def store_data(**kwargs):
     # read data from cache
+    path_output = kwargs['dag_run'].conf['path_output']
     try:
         df_join = pd.read_csv('./tmp/data_topn.csv')
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))
         sys.exit(1)
     # cache joined data
-    df_join.to_csv(filepath)
+    df_join.to_csv(path_output)
     # clean up tmr
     shutil.rmtree('./tmp')
-
 
 # create DAG
 args = {
     'owner': 'Airflow',
     'description': 'Get topn daily categories',
     'start_date': datetime(2017, 11, 14),
-    'catchup': False
+    'catchup': False,
+    'provide_context': True
 }
 
 dag = DAG(
@@ -94,13 +102,11 @@ dag = DAG(
 op1 = PythonOperator(
     task_id='filter_data',
     python_callable=filter_data,
-    op_kwargs={'path_vids': '../Data/USvideos.csv.zip', 'date': '17.14.11'},
     dag=dag)
 
 op2 = PythonOperator(
     task_id='preprocess_data',
     python_callable=preprocess_data,
-    op_kwargs={'path_cats': '../Data/US_category_id.json'},
     dag=dag)
 
 op3 = PythonOperator(
@@ -111,13 +117,11 @@ op3 = PythonOperator(
 op4 = PythonOperator(
     task_id='sort_data',
     python_callable=sort_data,
-    op_kwargs={'topn': 10},
     dag=dag)
 
 op5 = PythonOperator(
     task_id='store_data',
     python_callable=store_data,
-    op_kwargs={'filepath': '../Data/top_10_trendy_cats.csv'},
     dag=dag)
 
 [op1, op2] >> op3 >> op4 >> op5
