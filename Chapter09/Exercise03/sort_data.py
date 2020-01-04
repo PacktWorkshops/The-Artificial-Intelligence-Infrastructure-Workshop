@@ -14,12 +14,18 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == "__main__":
+    import os
+    import sys
+    from os import path
+
     # get args
     args = parse_args()
     topn = args.num
 
     # read data from cache
     try:
+        # change workding dir to Exercise03
+        os.chdir(path.dirname(path.abspath(__file__)))
         df_join = pd.read_csv('./tmp/data_joined.csv')
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))

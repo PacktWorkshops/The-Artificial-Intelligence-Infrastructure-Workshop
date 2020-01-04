@@ -1,6 +1,6 @@
 import argparse
 import os
-
+from pathlib import Path
 import pandas as pd
 
 
@@ -28,8 +28,9 @@ if __name__ == "__main__":
     # filter
     df_filtered = filter_by_date(df_data, date)
     # cache
+    dir_cache = Path(__file__).parent.absolute()/'tmp'
     try:
-        df_filtered.to_csv('./tmp/data_vids.csv', index=False)
+        df_filtered.to_csv(os.path.join(dir_cache, 'data_vids.csv'), index=False)
     except FileNotFoundError:
-        os.mkdir('./tmp')
-        df_filtered.to_csv('./tmp/data_vids.csv', index=False)
+        os.mkdir(dir_cache)
+        df_filtered.to_csv(os.path.join(dir_cache, 'data_vids.csv'), index=False)

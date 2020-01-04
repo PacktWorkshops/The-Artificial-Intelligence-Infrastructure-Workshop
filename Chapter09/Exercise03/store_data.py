@@ -10,13 +10,15 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == "__main__":
+    from pathlib import Path
     # get args
     args = parse_args()
     filepath = args.path
 
     # read data from cache
     try:
-        df_join = pd.read_csv('./tmp/data_topn.csv')
+        file_cached = Path(__file__).parent.absolute()/'tmp/data_topn.csv'
+        df_join = pd.read_csv(file_cached)
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))
         sys.exit(1)
