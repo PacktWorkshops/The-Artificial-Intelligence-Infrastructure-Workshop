@@ -1,12 +1,12 @@
 # change workding dir
 cd Activity01/
 
+# copy dag to airflow HOME dir
+cp ./ratio_dag.py ~/airflow/dags/
+
 # launch airflow
 airflow webserver -p 8080 &
 airflow scheduler &
-
-# copy dag to airflow HOME dir
-cp ./ratio_dag.py ~/airflow/dags/
 
 # check dag
 airflow list_dags
