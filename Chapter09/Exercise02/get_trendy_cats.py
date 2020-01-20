@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # read data
     df_vids = pd.read_csv(PATH_FILE_VIDS, compression='zip')
-    data_cats = json.load(open('./Data/US_category_id.json', 'r'))
+    data_cats = json.load(open(PATH_FILE_CAT , 'r'))
     # convert json to dataframe
     df_cat = pd.DataFrame(data_cats)
     df_cat['category'] = df_cat['items'].apply(lambda x: x['snippet']['title'])
