@@ -25,3 +25,4 @@ if __name__ == "__main__":
 
     # cache joined data
     df_join.to_csv(filepath)
+    print('[ data pipeline ] finish sort data')

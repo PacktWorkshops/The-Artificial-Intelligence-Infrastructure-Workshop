@@ -34,3 +34,4 @@ if __name__ == "__main__":
     except FileNotFoundError:
         os.mkdir(dir_cache)
         df_filtered.to_csv(os.path.join(dir_cache, 'data_vids.csv'), index=False)
+    print('[ data pipeline ] finish filter data')

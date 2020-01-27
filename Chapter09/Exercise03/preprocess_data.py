@@ -30,3 +30,4 @@ if __name__ == "__main__":
     except FileNotFoundError:
         os.mkdir(dir_cache)
         df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
+    print('[ data pipeline ] finish filter data')

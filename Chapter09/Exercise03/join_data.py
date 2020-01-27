@@ -22,3 +22,4 @@ if __name__ == "__main__":
 
     # cache joined data
     df_join.to_csv('./tmp/data_joined.csv')
+    print('[ data pipeline ] finish join data')
