@@ -36,3 +36,4 @@ if __name__ == "__main__":
 
     # cache joined data
     df_topn.to_csv('./tmp/data_topn.csv')
+    print('[ data pipeline ] finish sort data')
