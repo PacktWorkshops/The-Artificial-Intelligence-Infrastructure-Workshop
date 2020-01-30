@@ -42,3 +42,5 @@ if __name__ == "__main__":
 
     # clean up tmp
     shutil.rmtree('./tmp')
+
+    print('[ run_pipeline.py ] Done uploading result data to S3 bucket')
