@@ -20,7 +20,7 @@ if __name__ == "__main__":
             './tmp/New_York_City_Leading_Causes_of_Death.csv')
 
     # read file with pandas
-    df = pd.read_csv('./tmp/New_York_City_Leading_Causes_of_Death.csv', )
+    df = pd.read_csv('./tmp/New_York_City_Leading_Causes_of_Death.csv')
 
     # filter out data with invalid values
     df_filterred = df[df['Deaths'].apply(lambda x: str(x).isdigit())]
