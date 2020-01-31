@@ -63,7 +63,7 @@ def calc_ratio(**kwargs):
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))
         sys.exit(1)
-    # aggreate likes and dislikes by category
+    # aggregate likes and dislikes by category
     df_agg = df_join[['category', 'likes', 'dislikes']].groupby('category').sum()
     # calculate ratio
     df_agg['ratio_likes_dislikes'] = df_agg['likes'] / df_agg['dislikes']
