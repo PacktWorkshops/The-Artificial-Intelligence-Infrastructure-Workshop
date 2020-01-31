@@ -7,8 +7,8 @@ import pandas as pd
 def parse_args():
     parser = argparse.ArgumentParser(
         prog="exercise 3",
-        description="preprocess meta data")
-    parser.add_argument('-f', '--file', type=str, required=True, help='meta data file path')
+        description="preprocess metadata")
+    parser.add_argument('-f', '--file', type=str, required=True, help='metadata file path')
     return parser.parse_args()
 
 if __name__ == "__main__":
