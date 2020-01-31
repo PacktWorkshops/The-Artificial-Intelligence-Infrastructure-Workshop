@@ -9,8 +9,6 @@ if __name__ == "__main__":
     from os import path
     # read data from cache
     try:
-        # change workding dir to Exercise03
-        os.chdir(path.dirname(path.abspath(__file__)))
         df_vids = pd.read_csv('./tmp/data_vids.csv')
         df_cats = pd.read_csv('./tmp/data_cats.csv')
     except Exception as e:

@@ -24,7 +24,7 @@ if __name__ == "__main__":
     df_cat['id'] = df_cat['items'].apply(lambda x: int(x['id']))
     df_cat_drop = df_cat.drop(columns=['kind', 'etag', 'items'])
     # cache
-    dir_cache = Path(__file__).parent.absolute()/'tmp'
+    dir_cache = './tmp'
     try:
         df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
     except FileNotFoundError:

@@ -1,4 +1,5 @@
 import sys
+import shutil
 import pandas as pd
 import argparse
 
@@ -17,7 +18,7 @@ if __name__ == "__main__":
 
     # read data from cache
     try:
-        file_cached = Path(__file__).parent.absolute()/'tmp/data_topn.csv'
+        file_cached = './tmp/data_topn.csv'
         df_join = pd.read_csv(file_cached)
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))
@@ -25,4 +26,8 @@ if __name__ == "__main__":
 
     # cache joined data
     df_join.to_csv(filepath)
+
+    # clean up tmr
+    shutil.rmtree('./tmp')
+
     print('[ data pipeline ] finish storing data')
