@@ -7,14 +7,14 @@ data = spark.read.csv('../../Datasets/netflix_titles_nov_2019.csv', header='true
 # data.show()
 
 # take only the movies
-movies = data.filter((col('type') == 'Movie') & (col('release_year') == 2019))
-# movies.show()
+movies = data.filter((col('type') == 'TV Show') & ((col('rating') == 'TV-G') | (col('rating') == 'TV-Y')))
+movies.show()
 
 # add a column with the number of actors
-transformed = movies.withColumn('count_cast', size(split(movies['cast'], ',')))
+transformed = movies.withColumn('count_lists', size(split(movies['listed_in'], ',')))
 
 # select a subset of columns to store
-selected = transformed.select('title', 'director', 'count_cast', 'cast', 'rating', 'release_year', 'type')
+selected = transformed.select('title', 'cast', 'rating', 'release_year', 'duration', 'count_lists', 'listed_in', 'description')
 selected.show()
 
 # write the contents of the DataFrame to disk
