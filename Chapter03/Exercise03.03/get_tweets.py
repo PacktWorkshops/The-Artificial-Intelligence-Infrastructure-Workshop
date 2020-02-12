@@ -34,7 +34,7 @@ def connect_to_twitter():
 
 
 s = socket.socket()
-s.bind(("localhost", 5557))
+s.bind(("localhost", 1234))
 print("Waiting for connection...")
 
 s.listen(1)  # wait for client connection, this should come from pySpark
