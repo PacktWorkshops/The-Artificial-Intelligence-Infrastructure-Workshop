@@ -1,7 +1,6 @@
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import explode, split, window, col, expr, when, from_json, lit
-from pyspark.sql.types import StructType, StructField, TimestampType, StringType
-import json
+from pyspark.sql.functions import col, from_json, lit, from_unixtime, unix_timestamp
+from pyspark.sql.types import StructType, StructField, StringType
 
 spark = SparkSession.builder.appName('Packt').getOrCreate()
 
@@ -13,11 +12,15 @@ schema = StructType([StructField('created_at', StringType(), True),
 
 lines2 = lines.select(from_json('value', schema).alias('tweet'))
 
-lines3 = lines2.selectExpr('tweet.created_at', 'tweet.text')
+lines3 = lines2.select('tweet.created_at', 'tweet.text',
+                       from_unixtime(unix_timestamp(col('tweet.created_at'),
+                                                    'EEE MMM dd HH:mm:ss ZZZZ yyyy')).alias('timestamp'))
 
-lines4 = lines3.withColumn('count', lit(1))
+lines4 = lines3.selectExpr('created_at', 'timestamp', 'text')
 
-query = lines4.writeStream.outputMode('append').format('console').start()
+lines5 = lines4.withColumn('count', lit(1))
+
+query = lines5.writeStream.outputMode('append').format('console').start()
 
 #windowed = lines4.groupBy(window('created_at', '1 minute', '10 seconds'))
 
