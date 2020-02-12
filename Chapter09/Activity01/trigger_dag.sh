@@ -5,8 +5,8 @@ cd Activity01/
 cp ./ratio_dag.py ~/airflow/dags/
 
 # launch airflow
-airflow webserver -p 8080 &
-airflow scheduler &
+airflow webserver -p 8080
+airflow scheduler
 
 # check dag
 airflow list_dags

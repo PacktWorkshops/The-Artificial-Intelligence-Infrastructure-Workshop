@@ -9,17 +9,17 @@ CAT_FILE=../Data/US_category_id.json
 OUTPUT_FILE=../Data/top_10_trendy_cats.csv
 SRC_DIR=../Exercise03
 
-echo "[[ JOB ]] runs on date $DATE with file located in $SOURCE_FILE and meta data located in $CAT_FILE"
+echo "[[ JOB ]] runs on date $DATE with file located in $SOURCE_FILE and metadata located in $CAT_FILE"
 echo "[[ JOB ]] result data will be persisted in $OUTPUT_FILE"
 
 # run job
 echo "[[ RUNNING JOB ]] step 1: filter source data"
 python $SRC_DIR/filter_data.py --file $SOURCE_FILE --date $DATE &
 
-echo "[[ RUNNING JOB ]] step 1.1: preprcess meta data"
+echo "[[ RUNNING JOB ]] step 1.1: preprcess metadata"
 python $SRC_DIR/preprocess_data.py --file $CAT_FILE &
 
-echo "[[ BLOCKING JOB ]] addtional step: check cached files and trigger next step"
+echo "[[ BLOCKING JOB ]] additional step: check cached files and trigger next step"
 while [[ ! -f ./tmp/data_cats.csv ]] || [[ ! -f ./tmp/data_vids.csv ]]
 do
   sleep 1

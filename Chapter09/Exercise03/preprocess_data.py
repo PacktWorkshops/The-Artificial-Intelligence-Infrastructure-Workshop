@@ -7,8 +7,8 @@ import pandas as pd
 def parse_args():
     parser = argparse.ArgumentParser(
         prog="exercise 3",
-        description="preprocess meta data")
-    parser.add_argument('-f', '--file', type=str, required=True, help='meta data file path')
+        description="preprocess metadata")
+    parser.add_argument('-f', '--file', type=str, required=True, help='metadata file path')
     return parser.parse_args()
 
 if __name__ == "__main__":
@@ -24,9 +24,10 @@ if __name__ == "__main__":
     df_cat['id'] = df_cat['items'].apply(lambda x: int(x['id']))
     df_cat_drop = df_cat.drop(columns=['kind', 'etag', 'items'])
     # cache
-    dir_cache = Path(__file__).parent.absolute()/'tmp'
+    dir_cache = './tmp'
     try:
         df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
     except FileNotFoundError:
         os.mkdir(dir_cache)
         df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
+    print('[ data pipeline ] finish preprocess data')

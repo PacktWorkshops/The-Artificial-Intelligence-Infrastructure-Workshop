@@ -28,9 +28,10 @@ if __name__ == "__main__":
     # filter
     df_filtered = filter_by_date(df_data, date)
     # cache
-    dir_cache = Path(__file__).parent.absolute()/'tmp'
+    dir_cache = './tmp'
     try:
         df_filtered.to_csv(os.path.join(dir_cache, 'data_vids.csv'), index=False)
     except FileNotFoundError:
         os.mkdir(dir_cache)
         df_filtered.to_csv(os.path.join(dir_cache, 'data_vids.csv'), index=False)
+    print('[ data pipeline ] finish filter data')

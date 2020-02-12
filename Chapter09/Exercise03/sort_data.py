@@ -24,8 +24,6 @@ if __name__ == "__main__":
 
     # read data from cache
     try:
-        # change workding dir to Exercise03
-        os.chdir(path.dirname(path.abspath(__file__)))
         df_join = pd.read_csv('./tmp/data_joined.csv')
     except Exception as e:
         print('>>>>>>>>>>>> Error: {}'.format(e))
@@ -36,3 +34,4 @@ if __name__ == "__main__":
 
     # cache joined data
     df_topn.to_csv('./tmp/data_topn.csv')
+    print('[ data pipeline ] finish sort data')
