@@ -27,7 +27,7 @@ if __name__ == "__main__":
     # cache joined data
     df_join.to_csv(filepath)
 
-    # clean up tmr
+    # clean up tmp
     shutil.rmtree('./tmp')
 
     print('[ data pipeline ] finish storing data')
