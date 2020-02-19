@@ -141,5 +141,3 @@ op6 = PythonOperator(
     dag=dag)
 
 [op1, op2] >> op3 >> op4 >> op5 >> op6
-
-cd ../Data/
