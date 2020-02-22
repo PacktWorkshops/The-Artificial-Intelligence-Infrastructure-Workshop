@@ -1,3 +1,3 @@
-head ../../Datsets/netflix_titles_nov_2019.csv | gawk -f netflix_console.awk
+head ../../Datasets/netflix_titles_nov_2019.csv | gawk -f netflix_console.awk
 
-cat ../../Datsets/netflix_titles_nov_2019.csv| gawk -f netflix.awk > netflix_filtered.csv
+cat ../../Datasets/netflix_titles_nov_2019.csv| gawk -f netflix.awk > netflix_filtered.csv
