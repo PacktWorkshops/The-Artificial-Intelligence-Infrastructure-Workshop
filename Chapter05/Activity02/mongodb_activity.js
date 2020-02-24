@@ -1,7 +1,10 @@
+#--Create database
 use fashionmart
 
+#-Set variable for current date
 todayDate=new Date()
 
+#--Create Products
 products=[{
 "p_name": "XIMO Trek shirt",
 "p_manufacturer": "XIMO",
@@ -78,10 +81,12 @@ products=[{
 }
 ]
 
+#---Insert data
 db.products.insert(products);
 
 db.products.find().pretty();
 
+#---Create Users
 users=[
   {
     "name":"Max",
@@ -97,39 +102,46 @@ users=[
   },
 ];
 
+#--Create User Logs
 user_logs=[
   {
-    user_id:ObjectId("5e038e15211649ccef9a742d"),
-    product_id:ObjectId("5e037d5c211649ccef9a7429"),
+    user_id:"Max",
+    product_id:"XIMO Trek shirt",
     action:"bought",
     ul_crated_at:todayDate
   },
   {
-    user_id:ObjectId("5e038e15211649ccef9a742d"),
-    product_id:ObjectId("5e037d4b211649ccef9a7428"),
+    user_id:"John Doe",
+    product_id:"NY cap",
     action:"bought",
     ul_crated_at:todayDate
 
   },
   {
-    user_id:ObjectId("5e038e15211649ccef9a742e"),
-    product_id:ObjectId("5e037d5c211649ccef9a7429"),
+    user_id:"Roger smith",
+    product_id: "XIMO Trek shorts",
     action:"bought",
     ul_crated_at:todayDate
 
   }
 ];
 
+#--Insert Users
 db.users.insert(users);
+
+
+#--Insert User Logs
 db.user_logs.insert(user_logs);
 
+
+#---Create Function for Join
 var user_logs_aggregate_pipeline = [
     { $lookup:
         {
-           from: "users",
-           localField: "user_id",
-           foreignField: "_id",
-           as: "users"
+		   from: "users",
+		   localField: "user_id",
+		   foreignField: "name",
+		   as: "users"
         }
     },
     {
@@ -137,16 +149,13 @@ var user_logs_aggregate_pipeline = [
         {
            from: "products",
            localField: "product_id",
-           foreignField: "_id",
+           foreignField: "p_name",
            as: "products"
         }
     },
     {
         "$unwind":"$users"
-    },
-    {
-        "$unwind":"$products"
-    },
+    },   
     {
         "$project": {
            "user":"$users.name",
@@ -156,11 +165,7 @@ var user_logs_aggregate_pipeline = [
          }
       }
 ];
+
+
+#---Select the data
 db.user_logs.aggregate(user_logs_aggregate_pipeline).pretty()
-
-
-
-
-
-
-

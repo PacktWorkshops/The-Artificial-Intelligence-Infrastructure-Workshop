@@ -1,4 +1,3 @@
-
 // Selecting and using database
 show dbs
 use fashionmart
@@ -31,12 +30,12 @@ products={
   ]
 };
 
-db.products.insert(product);
+db.products.insert(products);
 db.products.find({p_manufacturer:"Z-1"}).pretty();
 
 // Searching against elements of an array
 db.products.find({sales :{$elemMatch: {"s_profit":6}}}).pretty()
-db.products.find({“sales.p_profit”:6}).pretty()
+db.products.find({"sales.s_profit":6}).pretty()
 
 // Aggregation pipeline
 
@@ -65,11 +64,10 @@ db.products.aggregate(total_sales_for_product_pipeline).pretty()
 function total_product_sales(match_product,
   projection_field,
   count_field) {
-
   var matchObject = {};
   var countObject = {};
   matchObject[projection_field] = match_product;
-  countObject["$size"] = “$"+count_field;
+  countObject["$size"] = "$"+count_field;
   return [
   {
     "$match": matchObject
@@ -84,22 +82,7 @@ function total_product_sales(match_product,
 ]
 };
 
-db.products
-.aggregate(total_product_sales("Z-1 Running shoe","p_name","sales"))
-.pretty();
-
-
-db.products.aggregate([
-    {$match: {'sales.p_profit': 6}},
-    {$project: {
-        sales: {$filter: {
-            input: '$sales',
-            as: 'sale',
-            cond: {$eq: ['$$sales.p_profit', 6]}
-        }},
-        _id: 0
-    }}
-]);
+db.products.aggregate(total_product_sales("Z-1 Running shoe","p_name","sales")).pretty();
 
 // 2.  How many products are there?
 
@@ -120,7 +103,7 @@ function gt_product_sales(gt_value, compare_field) {
         "$unwind":"$sales"
       },
       {
-        "$match”: match_object
+        "$match": match_object
       },
       {
         "$project": {
@@ -131,4 +114,4 @@ function gt_product_sales(gt_value, compare_field) {
      ]
  };
 
- db.products.aggregate(6, “sales.s_profit”);
+ db.products.aggregate(gt_product_sales(6, "sales.s_profit"));
