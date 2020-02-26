@@ -10,7 +10,7 @@ def test_s3():
     s3_resource = boto3.resource('s3')
 
     # create a bucket
-    s3_resource.create_bucket(Bucket='ch10-data')
+    s3_resource.create_bucket(Bucket='TEST_BUCKET')
 
     # write file to a bucket
     top_causes = {
@@ -25,10 +25,10 @@ def test_s3():
         with open('tmp/top_causes_per_ethnicity.json', 'w') as fout:
             json.dump(top_causes, fout)
 
-    s3_resource.Object('ch10-data', 'top_causes_per_ethnicity.json').put(Body=open('tmp/top_causes_per_ethnicity.json', 'rb'))
+    s3_resource.Object('TEST_BUCKET', 'top_causes_per_ethnicity.json').put(Body=open('tmp/top_causes_per_ethnicity.json', 'rb'))
 
     # download
-    s3_resource.Bucket('ch10-data').download_file(
+    s3_resource.Bucket('TEST_BUCKET').download_file(
         'top_causes_per_ethnicity.json', 
         'tmp/copy_top_causes_per_ethnicity.json')
  

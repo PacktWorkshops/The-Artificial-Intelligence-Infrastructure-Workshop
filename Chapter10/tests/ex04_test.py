@@ -9,7 +9,7 @@ def test_s3():
     s3_resource = boto3.resource('s3')
 
     # create a bucket
-    s3_resource.create_bucket(Bucket='ch10-data')
+    s3_resource.create_bucket(Bucket='TEST_BUCKET')
 
     # write file to a bucket
     try:
@@ -20,10 +20,10 @@ def test_s3():
         with open('tmp/New_York_City_Leading_Causes_of_Death.csv', 'w') as fout:
             fout.write('foo\n')
 
-    s3_resource.Object('ch10-data', 'New_York_City_Leading_Causes_of_Death.csv').put(Body=open('tmp/New_York_City_Leading_Causes_of_Death.csv', 'rb'))
+    s3_resource.Object('TEST_BUCKET', 'New_York_City_Leading_Causes_of_Death.csv').put(Body=open('tmp/New_York_City_Leading_Causes_of_Death.csv', 'rb'))
 
     # download
-    s3_resource.Bucket('ch10-data').download_file(
+    s3_resource.Bucket('TEST_BUCKET').download_file(
         'New_York_City_Leading_Causes_of_Death.csv', 
         './tmp/COPY_New_York_City_Leading_Causes_of_Death.csv')
  
