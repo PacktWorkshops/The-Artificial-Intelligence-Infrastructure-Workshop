@@ -5,15 +5,21 @@ import shutil
 import pandas as pd
 
 if __name__ == "__main__":
+
+    # set your bucket name here
+    # 'ch10-data' is NOT your bucket. It's just an example here
+    # you should replace your bucket below
+    BUCKET_NAME = 'ch10-data'
+
     # 1. download data from S3 bucket
     s3_resource = boto3.resource('s3')
     try:
-        s3_resource.Bucket('${BUCKET_NAME}').download_file(
+        s3_resource.Bucket(BUCKET_NAME).download_file(
             'New_York_City_Leading_Causes_of_Death.csv', 
             './tmp/New_York_City_Leading_Causes_of_Death.csv')
     except FileNotFoundError:
         os.mkdir('tmp/')
-        s3_resource.Bucket('${BUCKET_NAME}').download_file(
+        s3_resource.Bucket(BUCKET_NAME).download_file(
             'New_York_City_Leading_Causes_of_Death.csv', 
             './tmp/New_York_City_Leading_Causes_of_Death.csv')
         
@@ -35,7 +41,7 @@ if __name__ == "__main__":
         json.dump(top_causes, fout)
 
     # 5. upload data to S3
-    s3_resource.Bucket('${BUCKET_NAME}').upload_file(
+    s3_resource.Bucket(BUCKET_NAME).upload_file(
         'tmp/top_causes_per_ethnicity.json',
         'top_causes_per_ethnicity.json')
 
