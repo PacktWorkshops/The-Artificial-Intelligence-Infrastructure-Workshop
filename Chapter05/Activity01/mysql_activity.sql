@@ -2,7 +2,8 @@
 -- MySQL script : Solution to the MySQL Activities for chapter 5. Databases
 -- Creating structure
 
-use fashionmart;
+Create database PacktFashion;
+use PacktFashion;
 
 CREATE TABLE manufacturer (m_id INT,
 m_name TEXT,
@@ -110,22 +111,28 @@ VALUES
 (4,3,2,2,now()),
 (5,1,1,2,now());
 
+SELECT * FROM manufacturer;
+SELECT * FROM products;
+SELECT * FROM sales;
+SELECT * FROM location;
+SELECT * FROM status;
+SELECT * FROM inventory;
 
---Answers
 
--- Question 1
 SELECT count(inventory.inv_p_id) as total_in_stock_products
      FROM inventory
      JOIN status
      ON status.status_id=inventory.inv_status_id
      WHERE status.status_name='IN';
--- Question 2
+
+
 SELECT count(inventory.inv_p_id) as total_out_of_stock_products
      FROM inventory
      JOIN status
      ON status.status_id=inventory.inv_status_id
      WHERE status.status_name='OUT';
--- Question 3
+
+
 SELECT status.status_name as status
      FROM inventory, status, products, location
      WHERE status.status_id=inventory.inv_status_id

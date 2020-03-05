@@ -20,4 +20,4 @@ INSERT INTO feedback_logs(fl_id, fl_feedback, fl_location, user_id, fl_created_a
 APPLY BATCH;
 
 #--Count the fl_id
-SELECT COUNT(fl_id) AS total_feedbacks FROM feedback_logs;
+SELECT COUNT(fl_id) AS total_feedback FROM feedback_logs;

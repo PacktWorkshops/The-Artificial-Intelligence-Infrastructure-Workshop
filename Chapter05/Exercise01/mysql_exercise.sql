@@ -1,3 +1,4 @@
+create database fashionmart;
 use fashionmart;
 
 CREATE TABLE products (p_id INT,
@@ -19,12 +20,12 @@ FOREIGN KEY (p_id)
     ON DELETE CASCADE
 );
 
-
-INSERT INTO products(p_id, p_name, p_buy_price, p_manufacturer, p_created_at)
-VALUES(1, 'Z-1 Running shoe', 34, 'Z-1', now());
+desc products;
+desc sales;
 
 INSERT INTO products(p_id, p_name, p_buy_price, p_manufacturer, p_created_at)
 VALUES
+(1, 'Z-1 Running shoe', 34, 'Z-1', now()),
 (2, 'XIMO Trek shirt', 15, 'XIMO', now()),
 (3, 'XIMO Trek shorts', 18, 'XIMO', now()),
 (4, 'NY cap', 18, 'NY', now());
@@ -36,6 +37,9 @@ VALUES
 (3,3,19,1,now()),
 (4,1,40,6,now()),
 (5,1,34,0,now());
+
+SELECT * FROM products;
+SELECT * FROM sales;
 
 -- simple join
 SELECT
