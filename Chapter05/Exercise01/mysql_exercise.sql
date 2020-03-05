@@ -1,3 +1,4 @@
+create database fashionmart;
 use fashionmart;
 
 CREATE TABLE products (p_id INT,
@@ -21,10 +22,8 @@ FOREIGN KEY (p_id)
 
 
 INSERT INTO products(p_id, p_name, p_buy_price, p_manufacturer, p_created_at)
-VALUES(1, 'Z-1 Running shoe', 34, 'Z-1', now());
-
-INSERT INTO products(p_id, p_name, p_buy_price, p_manufacturer, p_created_at)
 VALUES
+(1, 'Z-1 Running shoe', 34, 'Z-1', now()),
 (2, 'XIMO Trek shirt', 15, 'XIMO', now()),
 (3, 'XIMO Trek shorts', 18, 'XIMO', now()),
 (4, 'NY cap', 18, 'NY', now());
