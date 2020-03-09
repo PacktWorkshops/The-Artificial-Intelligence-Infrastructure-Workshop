@@ -13,8 +13,11 @@ u_age int,
 u_location text,
 u_visits int,
 u_created_at timestamp,
-u_last_visited timestamp,
-);
+u_last_visited timestamp);
+
+describe tables;
+SELECT * FROM user;
+
 
 #--Insert Data
 INSERT INTO user(u_id, u_fname, u_lname, u_age, u_location, u_created_at, u_last_visited)
@@ -29,7 +32,9 @@ BEGIN BATCH
   INSERT INTO user(u_id, u_fname, u_lname, u_age, u_location, u_created_at, u_last_visited)
   VALUES(4,'Roger', 'Moore', 68, 'Amsterdam', toTimestamp(now()), '2019-12-02 14:50+0000');
 APPLY BATCH;
-
+         
+SELECT * FROM user;
+         
 #--Alter COLUMNFAMILY add column
 ALTER COLUMNFAMILY user ADD u_visits int;
 
@@ -49,11 +54,16 @@ BEGIN BATCH
   WHERE u_id=4; 
 APPLY BATCH;
 
-
+SELECT * FROM user;
+         
 #--Max U_visits
 SELECT MAX(u_visits) AS max_visits FROM user;
 
 #--Min U_visits
-SELECT MIN(u_visits) AS min_visits FROM user
-
-
+SELECT MIN(u_visits) AS min_visits FROM user;
+         
+#--Total U_visits
+SELECT SUM(u_visits) AS total_visits FROM user;
+         
+#--Average Age         
+SELECT AVG(u_age) as average_age FROM user;
