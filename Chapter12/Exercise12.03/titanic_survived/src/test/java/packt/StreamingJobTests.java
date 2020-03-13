@@ -1,10 +1,9 @@
 package packt;
 
-import jdk.internal.util.xml.impl.Input;
+import org.jpmml.evaluator.Evaluator;
 import org.jpmml.evaluator.InputField;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -14,23 +13,25 @@ public class StreamingJobTests {
     @Test
     public void canDeserializePmmlModel() {
         // arrange
+        String fileName = "titanic.pmml";
 
         // act
+        Evaluator evaluator = StreamingJob.getPmmlEvaluator(fileName);
 
         // assert
-        System.out.println("OK");
+        assertEquals(evaluator.getSummary(), "Regression");
     }
 
     @Test
     public void canGetFieldMap() {
         // arrange
-        StreamingJob sj = new StreamingJob();
+        String fileName = "titanic.pmml";
+        Evaluator evaluator = StreamingJob.getPmmlEvaluator(fileName);
 
         // act
+        List<? extends InputField> inputFields = evaluator.getInputFields();
 
         // assert
-
-        System.out.println("OK");
+        assertEquals(inputFields.size(), 6);
     }
-
 }

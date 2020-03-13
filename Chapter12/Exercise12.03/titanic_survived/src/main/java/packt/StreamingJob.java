@@ -28,7 +28,11 @@ import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSin
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.*;
 import org.jpmml.evaluator.visitors.DefaultVisitorBattery;
+import org.xml.sax.SAXException;
+
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,20 +53,16 @@ import java.util.Map;
 public class StreamingJob {
 
 	public static void main(String[] args) throws Exception {
-		// prepare PMML evaluation
-		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+		// load PMML
+		Evaluator evaluator = getPmmlEvaluator("titanic.pmml");
 
-		Evaluator evaluator = new LoadingModelEvaluatorBuilder()
-				.setLocatable(false)
-				.setVisitors(new DefaultVisitorBattery())
-				.load(new File(classLoader.getResource("titanic.pmml").getFile()))
-				.build();
-
+		// get input fields
 		List<? extends InputField> inputFields = evaluator.getInputFields();
 
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		// read input from local socket
 		DataStream<String> dataStream = env.socketTextStream("localhost", 1234, "\n");
 
 		SingleOutputStreamOperator<String> mapped = dataStream.map(new MapFunction<String, String>() {
@@ -83,6 +83,7 @@ public class StreamingJob {
 			}
 		});
 
+		// write results to output file
 		StreamingFileSink<String> sink = StreamingFileSink
 				.forRowFormat(new Path("out"), new SimpleStringEncoder<String>("UTF-8"))
 				.build();
@@ -91,6 +92,23 @@ public class StreamingJob {
 
 		// execute program
 		env.execute("Flink Streaming Java Titanic");
+	}
+
+	public static Evaluator getPmmlEvaluator(String fileName) {
+		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+
+		Evaluator evaluator = null;
+		try {
+			evaluator = new LoadingModelEvaluatorBuilder()
+					.setLocatable(false)
+					.setVisitors(new DefaultVisitorBattery())
+					.load(new File(classLoader.getResource(fileName).getFile()))
+					.build();
+		} catch (IOException | SAXException | JAXBException e) {
+			e.printStackTrace();
+		}
+
+		return evaluator;
 	}
 
 	public static Map<FieldName, FieldValue> getFieldMap(String s, List<? extends InputField> inputFields) {
