@@ -4,8 +4,6 @@ use fashionmart
 
 // Creating colleciton Products
 db.createCollection(“products”);
-show collections
-db.getCollectionNames();
 
 // Inserting a product document
 
@@ -31,11 +29,6 @@ products={
 };
 
 db.products.insert(products);
-db.products.find({p_manufacturer:"Z-1"}).pretty();
-
-// Searching against elements of an array
-db.products.find({sales :{$elemMatch: {"s_profit":6}}}).pretty()
-db.products.find({"sales.s_profit":6}).pretty()
 
 // Aggregation pipeline
 

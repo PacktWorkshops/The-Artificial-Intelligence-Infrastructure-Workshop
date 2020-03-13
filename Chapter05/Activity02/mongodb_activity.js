@@ -1,5 +1,7 @@
 #--Create database
-use fashionmart
+use PacktFashion
+
+db.createCollection("products")
 
 #-Set variable for current date
 todayDate=new Date()
