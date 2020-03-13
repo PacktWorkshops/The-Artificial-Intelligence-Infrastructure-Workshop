@@ -50,7 +50,7 @@ public class StreamingJob {
 
 	public static void main(String[] args) throws Exception {
 		// prepare PMML evaluation
-		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+		ClassLoader classLoader = com.packt.ai.StreamingJob.class.getClassLoader();
 
 		Evaluator evaluator = new LoadingModelEvaluatorBuilder()
 				.setLocatable(false)
