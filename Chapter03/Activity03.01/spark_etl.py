@@ -18,4 +18,4 @@ selected = transformed.select('title', 'cast', 'rating', 'release_year', 'durati
 selected.show()
 
 # write the contents of the DataFrame to disk
-selected.write.csv('transformed.csv', header='true')
+selected.write.csv('transformed2.csv', header='true')
