@@ -28,28 +28,41 @@ import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSin
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.*;
 import org.jpmml.evaluator.visitors.DefaultVisitorBattery;
+import org.xml.sax.SAXException;
+
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+
+/**
+ * Skeleton for a Flink Streaming Job.
+ *
+ * <p>For a tutorial how to write a Flink streaming application, check the
+ * tutorials and examples on the <a href="https://flink.apache.org/docs/stable/">Flink Website</a>.
+ *
+ * <p>To package your application into a JAR file for execution, run
+ * 'mvn clean package' on the command line.
+ *
+ * <p>If you change the name of the main class (with the public static void main(String[] args))
+ * method, change the respective entry in the POM.xml file (simply search for 'mainClass').
+ */
 public class StreamingJob {
 
 	public static void main(String[] args) throws Exception {
-		// prepare PMML evaluation
-		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+		// load PMML
+		Evaluator evaluator = getPmmlEvaluator("titanic.pmml");
 
-		Evaluator evaluator = new LoadingModelEvaluatorBuilder()
-				.setLocatable(false)
-				.setVisitors(new DefaultVisitorBattery())
-				.load(new File(classLoader.getResource("titanic.pmml").getFile()))
-				.build();
-
+		// get input fields
 		List<? extends InputField> inputFields = evaluator.getInputFields();
 
 		// set up the streaming execution environment
 		final StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
+		// read input from local socket
 		DataStream<String> dataStream = env.socketTextStream("localhost", 1234, "\n");
 
 		SingleOutputStreamOperator<String> mapped = dataStream.map(new MapFunction<String, String>() {
@@ -57,15 +70,7 @@ public class StreamingJob {
 			public String map(String s) throws Exception {
 				System.out.println("EVENT: " + s);
 
-				Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
-				String[] values = s.split(",");
-
-				// prepare model evaluation
-				for (int i = 0; i < values.length; i++) {
-					FieldName inputName = inputFields.get(i).getName();
-					FieldValue inputValue = inputFields.get(i).prepare(values[i]);
-					arguments.put(inputName, inputValue);
-				}
+				Map<FieldName, FieldValue> arguments = getFieldMap(s, inputFields);
 
 				// execute the model
 				Map<FieldName, ?> results = evaluator.evaluate(arguments);
@@ -78,6 +83,7 @@ public class StreamingJob {
 			}
 		});
 
+		// write results to output file
 		StreamingFileSink<String> sink = StreamingFileSink
 				.forRowFormat(new Path("out"), new SimpleStringEncoder<String>("UTF-8"))
 				.build();
@@ -86,5 +92,36 @@ public class StreamingJob {
 
 		// execute program
 		env.execute("Flink Streaming Java Titanic");
+	}
+
+	public static Evaluator getPmmlEvaluator(String fileName) {
+		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+
+		Evaluator evaluator = null;
+		try {
+			evaluator = new LoadingModelEvaluatorBuilder()
+					.setLocatable(false)
+					.setVisitors(new DefaultVisitorBattery())
+					.load(new File(classLoader.getResource(fileName).getFile()))
+					.build();
+		} catch (IOException | SAXException | JAXBException e) {
+			e.printStackTrace();
+		}
+
+		return evaluator;
+	}
+
+	public static Map<FieldName, FieldValue> getFieldMap(String s, List<? extends InputField> inputFields) {
+		Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
+		String[] values = s.split(",");
+
+		// prepare model evaluation
+		for (int i = 0; i < values.length; i++) {
+			FieldName inputName = inputFields.get(i).getName();
+			FieldValue inputValue = inputFields.get(i).prepare(values[i]);
+			arguments.put(inputName, inputValue);
+		}
+
+		return arguments;
 	}
 }

@@ -28,7 +28,11 @@ import org.apache.flink.streaming.api.functions.sink.filesystem.StreamingFileSin
 import org.dmg.pmml.FieldName;
 import org.jpmml.evaluator.*;
 import org.jpmml.evaluator.visitors.DefaultVisitorBattery;
+import org.xml.sax.SAXException;
+
+import javax.xml.bind.JAXBException;
 import java.io.File;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,15 +53,10 @@ import java.util.Map;
 public class StreamingJob {
 
 	public static void main(String[] args) throws Exception {
-		// prepare PMML evaluation
-		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+		// load PMML
+		Evaluator evaluator = getPmmlEvaluator("titanic_class.pmml");
 
-		Evaluator evaluator = new LoadingModelEvaluatorBuilder()
-				.setLocatable(false)
-				.setVisitors(new DefaultVisitorBattery())
-				.load(new File(classLoader.getResource("titanic_class.pmml").getFile()))
-				.build();
-
+		// get input fields
 		List<? extends InputField> inputFields = evaluator.getInputFields();
 
 		// set up the streaming execution environment
@@ -99,5 +98,36 @@ public class StreamingJob {
 
 		// execute program
 		env.execute("Flink Streaming Java Titanic Class Prediction");
+	}
+
+	public static Evaluator getPmmlEvaluator(String fileName) {
+		ClassLoader classLoader = StreamingJob.class.getClassLoader();
+
+		Evaluator evaluator = null;
+		try {
+			evaluator = new LoadingModelEvaluatorBuilder()
+					.setLocatable(false)
+					.setVisitors(new DefaultVisitorBattery())
+					.load(new File(classLoader.getResource(fileName).getFile()))
+					.build();
+		} catch (IOException | SAXException | JAXBException e) {
+			e.printStackTrace();
+		}
+
+		return evaluator;
+	}
+
+	public static Map<FieldName, FieldValue> getFieldMap(String s, List<? extends InputField> inputFields) {
+		Map<FieldName, FieldValue> arguments = new LinkedHashMap<>();
+		String[] values = s.split(",");
+
+		// prepare model evaluation
+		for (int i = 0; i < values.length; i++) {
+			FieldName inputName = inputFields.get(i).getName();
+			FieldValue inputValue = inputFields.get(i).prepare(values[i]);
+			arguments.put(inputName, inputValue);
+		}
+
+		return arguments;
 	}
 }
