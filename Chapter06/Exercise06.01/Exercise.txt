@@ -1,0 +1,49 @@
+#Read CSV
+var df_iris_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Bigdata/Datasets/iris.csv")
+
+#Read JSON
+var df_iris_json = spark.read.json("F:/Bigdata/Datasets/iris.json")
+
+
+#Using CSV Data frame
+
+# Writing & Read PARQUET
+df_iris_csv.write.parquet("F:/Bigdata/Output/iris.parquet")
+var df_iris_parquet = spark.read.parquet("F:/Bigdata/Output/iris.parquet")
+
+# Writing & Read ORC
+df_iris_csv.write.orc("F:/Bigdata/Output/iris.orc")
+var df_iris_orc = spark.read.orc("F:/Bigdata/Output/iris.orc")
+
+# Writing & Read AVRO
+df_iris_csv.write.format("avro").save("F:/Bigdata/Output/iris.avro")
+var df_iris_avro = spark.read.format("avro").load("F:/Bigdata/Output/iris.avro")
+
+
+#Using JSON Data frame
+
+# Writing & Read PARQUET
+df_iris_json.write.parquet("F:/Bigdata/Output/JSON/iris.parquet")
+var df_iris_parquet = spark.read.parquet("F:/Bigdata/Output/JSON/iris.parquet")
+
+# Writing & Read ORC
+df_iris_json.write.orc("F:/Bigdata/Output/JSON/iris.orc")
+var df_iris_orc = spark.read.orc("F:/Bigdata/Output/JSON/iris.orc")
+
+# Writing & Read AVRO
+df_iris_json.write.format("avro").save("F:/Bigdata/Output/JSON/iris.avro")
+var df_iris_avro = spark.read.format("avro").load("F:/Bigdata/Output/JSON/iris.avro")
+
+
+var df_test_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Bigdata/Datasets/test.csv")
+
+#Using CSV Data frame
+
+# Writing & Read PARQUET
+df_test_csv.write.parquet("F:/Bigdata/Output/Test/iris.parquet")
+
+# Writing & Read ORC
+df_test_csv.write.orc("F:/Bigdata/Output/Test/iris.orc")
+
+# Writing & Read AVRO
+df_test_csv.write.format("avro").save("F:/Bigdata/Output/Test/iris.avro")

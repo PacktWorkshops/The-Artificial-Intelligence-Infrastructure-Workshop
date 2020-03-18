@@ -1,0 +1,71 @@
+# Activity
+
+# Read CSV
+val df_ses_log_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Bigdata/Datasets/session_log.csv")
+
+
+# Using CSV Data frame to write in different file formats
+
+# Writing & Read PARQUET
+df_ses_log_csv.write.parquet("F:/Bigdata/Output/Activity/session_log.parquet")
+# Output: 115 MB
+
+
+# Writing & Read ORC
+df_ses_log_csv.write.orc("F:/Bigdata/Output/Activity/session_log.orc")
+# Output: 182 MB
+
+
+# Writing & Read AVRO
+df_ses_log_csv.write.format("avro").save("F:/Bigdata/Output/Activity/session_log.avro")
+# Output: 454 MB
+
+
+# Performance Chart
+
+
+#Function for time consumption
+
+def time[A](f: => A) = {
+	val s = System.nanoTime
+	val ret = f
+	println("time: "+(System.nanoTime-s)/1e6+"ms")
+	ret
+  }
+
+
+
+#Query SET 1
+
+# To execute perfomance metric, first we will read the data
+var df_ses_log_parquet = spark.read.parquet("F:/Bigdata/Output/Activity/session_log.parquet")
+var df_ses_log_orc = spark.read.orc("F:/Bigdata/Output/Activity/session_log.orc")
+var df_ses_log_avro = spark.read.format("avro").load("F:/Bigdata/Output/Activity/session_log.avro")
+
+
+time{df_ses_log_avro.groupBy("session_nb").count()}
+time{df_ses_log_parquet.groupBy("session_nb").count()}
+time{df_ses_log_orc.groupBy("session_nb").count()}
+
+
+#Creating tables 
+
+#Parquet
+df_ses_log_parquet.createOrReplaceTempView("session_log_parquet")
+#ORC
+df_ses_log_orc.createOrReplaceTempView("session_log_orc")
+#AVRO
+df_ses_log_avro.createOrReplaceTempView("session_log_avro")
+
+
+#Query SET 2
+
+val p_yr_query = "Select count(Year),Year from (Select SUBSTRING(event_date,7,10) as Year from session_log_parquet) GROUP BY Year"
+time{spark.sql(p_yr_query)}
+
+val o_yr_query = "Select count(Year),Year from (Select SUBSTRING(event_date,7,10) as Year from session_log_orc) GROUP BY Year"
+time{spark.sql(o_yr_query)}
+
+val a_yr_query = "Select count(Year),Year from (Select SUBSTRING(event_date,7,10) as Year from session_log_avro) GROUP BY Year"
+time{spark.sql(a_yr_query)}
+
