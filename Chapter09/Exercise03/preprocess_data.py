@@ -26,8 +26,8 @@ if __name__ == "__main__":
     # cache
     dir_cache = './tmp'
     try:
-        df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
+        df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'), index=False)
     except FileNotFoundError:
         os.mkdir(dir_cache)
-        df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'))
+        df_cat_drop.to_csv(os.path.join(dir_cache, 'data_cats.csv'), index=False)
     print('[ data pipeline ] finish preprocess data')

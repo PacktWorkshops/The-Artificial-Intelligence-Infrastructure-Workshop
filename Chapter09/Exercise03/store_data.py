@@ -25,7 +25,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # cache joined data
-    df_join.to_csv(filepath)
+    df_join.to_csv(filepath, index=False)
 
     # clean up tmp
     shutil.rmtree('./tmp')

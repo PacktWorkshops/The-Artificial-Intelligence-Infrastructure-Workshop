@@ -20,7 +20,7 @@ echo "[[ RUNNING JOB ]] step 1.1: preprcess metadata"
 python $SRC_DIR/preprocess_data.py --file $CAT_FILE &
 
 echo "[[ BLOCKING JOB ]] additional step: check cached files and trigger next step"
-while [[ ! -f ./tmp/data_cats.csv ]] || [[ ! -f ./tmp/data_vids.csv ]]
+while [ ! -f ./tmp/data_cats.csv ] || [ ! -f ./tmp/data_vids.csv ]
 do
   sleep 1
 done

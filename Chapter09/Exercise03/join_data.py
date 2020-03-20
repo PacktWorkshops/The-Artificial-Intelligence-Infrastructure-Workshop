@@ -19,5 +19,5 @@ if __name__ == "__main__":
     df_join = join_cats(df_vids, df_cats)
 
     # cache joined data
-    df_join.to_csv('./tmp/data_joined.csv')
+    df_join.to_csv('./tmp/data_joined.csv', index=False)
     print('[ data pipeline ] finish join data')
