@@ -1,0 +1,26 @@
+#Read CSV
+var df_iris_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Bigdata/Datasets/iris.csv")
+
+#Read JSON
+var df_iris_json = spark.read.json("F:/Bigdata/Datasets/iris.json")
+
+#Show the df
+df_iris_csv.show(false)
+
+
+# Writing to ORC
+
+#Using CSV Data frame
+
+df_iris_csv.write.orc("F:/Bigdata/Output/iris.orc")
+var df_iris_orc = spark.read.orc("F:/Bigdata/Output/iris.orc")
+
+#Using JSON Data frame
+
+df_iris_json.write.orc("F:/Bigdata/Output/JSON/iris.orc")
+var df_iris_orc = spark.read.orc("F:/Bigdata/Output/JSON/iris.orc")
+
+
+# Reading ORC file
+val df_iris_orc = spark.read.orc("F:/Bigdata/Output/iris.orc")
+df_irsi_orc.show(false)
