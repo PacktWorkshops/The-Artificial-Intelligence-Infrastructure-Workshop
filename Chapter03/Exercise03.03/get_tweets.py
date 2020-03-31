@@ -8,6 +8,18 @@ ACCESS_TOKEN = ''
 ACCESS_SECRET = ''
 
 
+def connect_to_twitter():
+    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
+    api = tweepy.API(auth)
+
+    my_stream_listener = MyStreamListener()
+    my_stream = tweepy.Stream(auth=api.auth, listener=my_stream_listener)
+
+    # select a (limited) tweet stream
+    my_stream.filter(track=['#AI'])
+    
+   
 class MyStreamListener(tweepy.StreamListener):
     def on_error(self, status_code):
         if status_code == 420:
@@ -19,18 +31,6 @@ class MyStreamListener(tweepy.StreamListener):
         # send the entire tweet to the socket on localhost where pySpark is listening
         client_socket.sendall(bytes(data, encoding='utf-8'))
         return True
-
-
-def connect_to_twitter():
-    auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-    auth.set_access_token(ACCESS_TOKEN, ACCESS_SECRET)
-    api = tweepy.API(auth)
-
-    my_stream_listener = MyStreamListener()
-    my_stream = tweepy.Stream(auth=api.auth, listener=my_stream_listener)
-
-    # select a (limited) tweet stream
-    my_stream.filter(track=['#AI'])
 
 
 s = socket.socket()
