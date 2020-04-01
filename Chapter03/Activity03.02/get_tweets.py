@@ -2,6 +2,7 @@ import socket
 import tweepy
 from tweepy import OAuthHandler
 
+# TODO: replace the tokens and secrets with your own Twitter API values
 CONSUMER_KEY = ''
 CONSUMER_SECRET = ''
 ACCESS_TOKEN = ''
