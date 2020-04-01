@@ -4,12 +4,12 @@ from pyspark.sql.types import StructType, StructField, StringType
 
 tweet_datetime_format = 'EEE MMM dd HH:mm:ss ZZZZ yyyy'
 
+# launch a Spark session
+spark = SparkSession.builder.appName('Packt').getOrCreate()
+
 # the schema to parse a tweet in JSON format; we only need two columns
 schema = StructType([StructField('created_at', StringType(), True),
                      StructField('text', StringType(), True)])
-
-# launch a Spark session
-spark = SparkSession.builder.appName('Packt').getOrCreate()
 
 # get the raw data from a local socket
 raw_stream = spark.readStream.format('socket').option('host', 'localhost').option('port', 1234).load()

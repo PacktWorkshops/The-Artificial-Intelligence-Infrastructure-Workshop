@@ -4,7 +4,7 @@ from pyspark.sql.functions import col, split, size
 spark = SparkSession.builder.appName("Packt").getOrCreate()
 
 data = spark.read.csv('../../Datasets/netflix_titles_nov_2019.csv', header='true')
-# data.show()
+data.show()
 
 # take only the movies
 movies = data.filter((col('type') == 'TV Show') & ((col('rating') == 'TV-G') | (col('rating') == 'TV-Y')))
