@@ -23,7 +23,9 @@ timed_stream = tweet_stream.select(
     'tweet.text')
 
 # To display the tweets without windowing:
-# query = lines5.writeStream.outputMode('append').format('console').start()
+# query = timed_stream.writeStream.outputMode('append').format('console').start()
+# query.awaitTermination()
+
 
 # create a sliding window of 1 minute with a slide of 10 seconds, with a 'slack time' of 2 seconds
 windowed = timed_stream \
