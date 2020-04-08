@@ -1,26 +1,26 @@
 #Read CSV
-var df_iris_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/iris.csv")
+var df_census_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/Census.csv")
 
 #Read JSON
-var df_iris_json = spark.read.json("F:/Chapter06/Data/iris.json")
+var df_census_json = spark.read.json("F:/Chapter06/Data/Census.json")
 
 #Show the df
-df_iris_csv.show(false)
+df_census_csv.show()
 
 
 # Writing to AVRO format
 
 #Using CSV Data frame
 
-df_iris_csv.write.format("avro").save("F:/Chapter06/Output/iris.avro")
-var df_iris_avro = spark.read.format("avro").load("F:/Chapter06/Output/iris.avro")
+df_census_csv.write.format("avro").save("F:/Chapter06/Data/Output/census_csv.avro")
+var df_census_avro = spark.read.format("avro").load("F:/Chapter06/Data/Output/census_csv.avro")
 
 #Using JSON Data frame
 
-df_iris_json.write.format("avro").save("F:/Chapter06/Output/JSON/iris.avro")
-var df_iris_avro = spark.read.format("avro").load("F:/Chapter06/Output/JSON/iris.avro")
+df_census_json.write.format("avro").save("F:/Chapter06/Data/Output/census_json.avro")
+var df_census_avro = spark.read.format("avro").load("F:/Chapter06/Data/Output/census_json.avro")
 
 
 # Reading AVRO file
-var df_iris_avro = spark.read.format("avro").load("F:/Chapter06/Output/iris.avro")
-df_irsi_avro.show(false)
+var df_census_avro = spark.read.format("avro").load("F:/Chapter06/Data/Output/census_csv.avro")
+df_census_avro.show()

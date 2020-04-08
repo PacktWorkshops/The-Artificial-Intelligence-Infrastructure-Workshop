@@ -1,26 +1,27 @@
 #Read CSV
-var df_iris_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/iris.csv")
+var df_census_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/Census.csv")
 
 #Read JSON
-var df_iris_json = spark.read.json("F:/Chapter06/Data/iris.json")
+var df_census_json = spark.read.json("F:/Chapter06/Data/Census.json")
 
 #Show the df
-df_iris_csv.show(false)
+df_census_csv.show()
+df_census_json.show()
 
 
 # Writing to PARQUET
 
 #Using CSV Data frame
 
-df_iris_csv.write.parquet("F:/Chapter06/Output/iris.parquet")
-var df_iris_parquet = spark.read.parquet("F:/Chapter06/Output/iris.parquet")
+df_census_csv.write.parquet("F:/Chapter06/Data/Output/census_csv.parquet")
+var df_census_parquet = spark.read.parquet("F:/Chapter06/Data/Output/census_csv.parquet")
 
 #Using JSON Data frame
 
-df_iris_json.write.parquet("F:/Chapter06/Output/JSON/iris.parquet")
-var df_iris_parquet = spark.read.parquet("F:/Chapter06/Output/JSON/iris.parquet")
+df_census_json.write.parquet("F:/Chapter06/Data/Output/census_json.parquet")
+var df_census_parquet = spark.read.parquet("F:/Chapter06/Data/Output/census_json.parquet")
 
 
 # Reading PARQUET file
-val df_iris_parquet = spark.read.parquet("F:/Chapter06/Output/iris.parquet")
-df_irsi_parquet.show(false)
+val df_census_parquet = spark.read.parquet("F:/Chapter06/Data/Output/census_csv.parquet")
+df_census_parquet.show()

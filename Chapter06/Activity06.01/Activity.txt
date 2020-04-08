@@ -1,7 +1,7 @@
 # Activity
 
 # Read CSV
-val df_ses_log_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Bigdata/Datasets/session_log.csv")
+val df_ses_log_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/session_log.csv")
 
 # Show the DF
 df_ses_log_csv.show(false)
@@ -10,17 +10,17 @@ df_ses_log_csv.show(false)
 # Using CSV Data frame to write in different file formats
 
 # Writing AVRO
-df_ses_log_csv.write.format("avro").save("F:/Bigdata/Output/Activity/session_log.avro")
+df_ses_log_csv.write.format("avro").save("F:/Chapter06/Data/session_log.avro")
 # Output: 454 MB
 
 
 # Writing ORC
-df_ses_log_csv.write.orc("F:/Bigdata/Output/Activity/session_log.orc")
+df_ses_log_csv.write.orc("F:/Chapter06/Data/session_log.orc")
 # Output: 182 MB
 
 
 # Writing PARQUET
-df_ses_log_csv.write.parquet("F:/Bigdata/Output/Activity/session_log.parquet")
+df_ses_log_csv.write.parquet("F:/Chapter06/Data/session_log.parquet")
 # Output: 115 MB
 
 
@@ -29,9 +29,9 @@ df_ses_log_csv.write.parquet("F:/Bigdata/Output/Activity/session_log.parquet")
 
 # To execute perfomance metric, first we will read the data
 # Read the data frame
-var df_ses_log_parquet = spark.read.parquet("F:/Bigdata/Output/Activity/session_log.parquet")
-var df_ses_log_orc = spark.read.orc("F:/Bigdata/Output/Activity/session_log.orc")
-var df_ses_log_avro = spark.read.format("avro").load("F:/Bigdata/Output/Activity/session_log.avro")
+var df_ses_log_parquet = spark.read.parquet("F:/Chapter06/Data/session_log.parquet")
+var df_ses_log_orc = spark.read.orc("F:/Chapter06/Data/session_log.orc")
+var df_ses_log_avro = spark.read.format("avro").load("F:/Chapter06/Data/session_log.avro")
 
 
 #Function for time consumption

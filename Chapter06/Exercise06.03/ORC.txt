@@ -1,26 +1,27 @@
 #Read CSV
-var df_iris_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/iris.csv")
+var df_census_csv = spark.read.options(Map("inferSchema"->"true","delimiter"->",","header"->"true")).csv("F:/Chapter06/Data/Census.csv")
 
 #Read JSON
-var df_iris_json = spark.read.json("F:/Chapter06/Data/iris.json")
+var df_census_json = spark.read.json("F:/Chapter06/Data/Census.json")
 
 #Show the df
-df_iris_csv.show(false)
+df_census_csv.show()
 
 
 # Writing to ORC
 
 #Using CSV Data frame
 
-df_iris_csv.write.orc("F:/Chapter06/Output/iris.orc")
-var df_iris_orc = spark.read.orc("F:/Chapter06/Output/iris.orc")
+df_census_csv.write.orc("F:/Chapter06/Data/Output/census_csv.orc")
+var df_census_orc = spark.read.orc("F:/Chapter06/Data/Output/census_csv.orc")
 
 #Using JSON Data frame
 
-df_iris_json.write.orc("F:/Chapter06/Output/JSON/iris.orc")
-var df_iris_orc = spark.read.orc("F:/Chapter06/Output/JSON/iris.orc")
+df_census_json.write.orc("F:/Chapter06/Output/Data/census_json.orc")
+var df_census_orc = spark.read.orc("F:/Chapter06/Data/Output/census_json.orc")
 
 
 # Reading ORC file
-val df_iris_orc = spark.read.orc("F:/Chapter06/Output/iris.orc")
-df_irsi_orc.show(false)
+val df_census_orc = spark.read.orc("F:/Chapter06/Data/Output/census_csv.orc")
+df_census_orc.show()
+
