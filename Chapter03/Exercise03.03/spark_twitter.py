@@ -6,13 +6,14 @@ from pyspark.sql.types import StructType, StructField, StringType
 schema = StructType([StructField('created_at', StringType(), True),
                      StructField('text', StringType(), True)])
 
-tweet_datetime_format = 'EEE MMM dd HH:mm:ss ZZZZ yyyy'
-
 # launch a Spark session
 spark = SparkSession.builder.appName('Packt').getOrCreate()
 
 # get the raw data from a local socket
 raw_stream = spark.readStream.format('socket').option('host', 'localhost').option('port', 1234).load()
+
+# set up the Twitter date-time format
+tweet_datetime_format = 'EEE MMM dd HH:mm:ss ZZZZ yyyy'
 
 # parse the json to get separate fields
 tweet_stream = raw_stream.select(from_json('value', schema).alias('tweet'))
