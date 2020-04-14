@@ -6,6 +6,7 @@ var df_census_json = spark.read.json("F:/Chapter06/Data/Census.json")
 
 // Show the df
 df_census_csv.show()
+df_census_json.show()
 
 
 //  Writing to ORC
