@@ -9,12 +9,6 @@ file.close()
 # create an API with Flask
 app = Flask('Titanic')
 
-
-@app.route('/hi', methods=['GET'])
-def hello():
-    return 'Hello world!'
-
-
 # call this: curl -X POST -H "Content-Type: application/json" \
 # -d '{"Pclass": 3, "Sex": 0, "Age": 72, "SibSb": 2, "Parch": 0, "Fare": 8.35}' http://127.0.0.1:5000/survived
 @app.route('/survived', methods=['POST'])
