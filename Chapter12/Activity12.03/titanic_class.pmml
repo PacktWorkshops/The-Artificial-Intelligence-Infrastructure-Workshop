@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <PMML xmlns="http://www.dmg.org/PMML-4_3" xmlns:data="http://jpmml.org/jpmml-model/InlineTable" version="4.3">
 	<Header>
-		<Application name="JPMML-SkLearn" version="1.5.32"/>
-		<Timestamp>2020-03-09T20:11:55Z</Timestamp>
+		<Application name="JPMML-SkLearn" version="1.5.35"/>
+		<Timestamp>2020-04-16T07:23:52Z</Timestamp>
 	</Header>
 	<DataDictionary>
 		<DataField name="y" optype="categorical" dataType="integer">
@@ -42,13 +42,13 @@
 					<Output>
 						<OutputField name="decisionFunction(1)" optype="continuous" dataType="double" isFinalResult="false"/>
 					</Output>
-					<RegressionTable intercept="-5.254940917958059">
-						<NumericPredictor name="x1" coefficient="0.69500118360676"/>
-						<NumericPredictor name="x2" coefficient="-0.535648027648837"/>
-						<NumericPredictor name="x3" coefficient="0.04056146637179815"/>
-						<NumericPredictor name="x4" coefficient="-1.9449014115340144"/>
-						<NumericPredictor name="x5" coefficient="-1.007343510925465"/>
-						<NumericPredictor name="x6" coefficient="0.12462664161235726"/>
+					<RegressionTable intercept="-5.254940917936017">
+						<NumericPredictor name="x1" coefficient="0.6950011836091101"/>
+						<NumericPredictor name="x2" coefficient="-0.5356480276424558"/>
+						<NumericPredictor name="x3" coefficient="0.04056146637542524"/>
+						<NumericPredictor name="x4" coefficient="-1.9449014115361871"/>
+						<NumericPredictor name="x5" coefficient="-1.0073435109522975"/>
+						<NumericPredictor name="x6" coefficient="0.12462664161325207"/>
 					</RegressionTable>
 				</RegressionModel>
 			</Segment>
@@ -66,13 +66,13 @@
 					<Output>
 						<OutputField name="decisionFunction(2)" optype="continuous" dataType="double" isFinalResult="false"/>
 					</Output>
-					<RegressionTable intercept="-1.4603173159379828">
-						<NumericPredictor name="x1" coefficient="0.6369942169105768"/>
-						<NumericPredictor name="x2" coefficient="0.17353435766601485"/>
-						<NumericPredictor name="x3" coefficient="0.007367666361627881"/>
-						<NumericPredictor name="x4" coefficient="-0.05977089306960623"/>
-						<NumericPredictor name="x5" coefficient="0.1342805315229194"/>
-						<NumericPredictor name="x6" coefficient="-0.017297844904760964"/>
+					<RegressionTable intercept="-1.4603166468275994">
+						<NumericPredictor name="x1" coefficient="0.6369941462300548"/>
+						<NumericPredictor name="x2" coefficient="0.1735341255022498"/>
+						<NumericPredictor name="x3" coefficient="0.007366910580729701"/>
+						<NumericPredictor name="x4" coefficient="-0.05977086578917514"/>
+						<NumericPredictor name="x5" coefficient="0.13428067390192056"/>
+						<NumericPredictor name="x6" coefficient="-0.01729710464257998"/>
 					</RegressionTable>
 				</RegressionModel>
 			</Segment>
@@ -90,13 +90,13 @@
 					<Output>
 						<OutputField name="decisionFunction(3)" optype="continuous" dataType="double" isFinalResult="false"/>
 					</Output>
-					<RegressionTable intercept="3.4240085954320985">
-						<NumericPredictor name="x1" coefficient="-0.820149454961641"/>
-						<NumericPredictor name="x2" coefficient="0.0050657334859190006"/>
-						<NumericPredictor name="x3" coefficient="-0.025056244320795958"/>
-						<NumericPredictor name="x4" coefficient="1.0720983541045206"/>
-						<NumericPredictor name="x5" coefficient="0.6635985198440908"/>
-						<NumericPredictor name="x6" coefficient="-0.15185060865334354"/>
+					<RegressionTable intercept="3.4240085954439152">
+						<NumericPredictor name="x1" coefficient="-0.8201494549586155"/>
+						<NumericPredictor name="x2" coefficient="0.0050657334907495705"/>
+						<NumericPredictor name="x3" coefficient="-0.025056243954594184"/>
+						<NumericPredictor name="x4" coefficient="1.0720983541061535"/>
+						<NumericPredictor name="x5" coefficient="0.6635985198485714"/>
+						<NumericPredictor name="x6" coefficient="-0.15185060847731455"/>
 					</RegressionTable>
 				</RegressionModel>
 			</Segment>
