@@ -7,7 +7,7 @@ DATE=17.14.11
 SOURCE_FILE=../Data/USvideos.csv.zip
 CAT_FILE=../Data/US_category_id.json
 OUTPUT_FILE=../Data/top_10_trendy_cats.csv
-SRC_DIR=../Exercise03
+SRC_DIR=../Exercise09.03
 
 echo "[[ JOB ]] runs on date $DATE with file located in $SOURCE_FILE and metadata located in $CAT_FILE"
 echo "[[ JOB ]] result data will be persisted in $OUTPUT_FILE"
