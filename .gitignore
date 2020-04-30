@@ -3,3 +3,5 @@ __pycache__
 .pytest
 .vscode/
 .ipynb_checkpoints/
+venv/
+.idea/
