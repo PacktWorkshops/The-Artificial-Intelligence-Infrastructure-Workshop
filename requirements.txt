@@ -12,8 +12,8 @@ boto3==1.13.24
 moto==1.3.14
 pytorch==1.0.2
 gym==0.17.2
-pyspark=2.4.5
-tweepy=3.6.0
-Flask=1.1.1
+pyspark==2.4.5
+tweepy==3.6.0
+Flask==1.1.1
 
 
