@@ -18,9 +18,12 @@ To get started with the project files, you'll need to:
 Social networking sites see an average of 350 million uploads daily - a quantity impossible for humans to scan and analyze. Only AI can do this job at the required speed, and to leverage an AI application at its full potential, you need an efficient and scalable data storage pipeline. The Artificial Intelligence Infrastructure Workshop will teach you how to build and manage one. 
 
 ## What you will learn
-* Understand how artificial intelligence, machine learning, and deep learning are different from one another 
-* Discover the data storage requirements of different AI apps using case studies 
-* Explore popular data solutions such as Hadoop Distributed File System (HDFS) and Amazon Simple Storage Service (S3) 
+* Get to grips with the fundamentals of artificial intelligence 
+* Understand the importance of data storage and architecture in AI applications 
+* Build data storage and workflow management systems with open source tools 
+* Containerize your AI applications with tools such as Docker 
+* Discover commonly used data storage solutions and best practices for AI on Amazon Web Services (AWS) 
+* Use the AWS CLI and AWS SDK to perform common data tasks 
 
 ## Related Workshops
 If you've found this repository useful, you might want to check out some of our other workshop titles:
