@@ -1,3 +1,6 @@
+
+<b><p align='center'>[![Packt Sale](https://static.packt-cdn.com/assets/images/packt+events/Improve_UX.png)](https://packt.link/algotradingpython)</p></b> 
+
 # The Artificial Intelligence Infrastructure Workshop
 [![GitHub issues](https://img.shields.io/github/issues/PacktWorkshops/The-Artificial-Intelligence-Infrastructure-Workshop.svg)](https://github.com/PacktWorkshops/The-Artificial-Intelligence-Infrastructure-Workshop/issues)
 [![GitHub forks](https://img.shields.io/github/forks/PacktWorkshops/The-Artificial-Intelligence-Infrastructure-Workshop.svg)](https://github.com/PacktWorkshops/The-Artificial-Intelligence-Infrastructure-Workshop/network)
